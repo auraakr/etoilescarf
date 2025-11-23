@@ -18,7 +18,7 @@
                     <tr>
                         <td class="px-6 py-3 whitespace-nowrap">{{ $user->name }}</td>
                         <td class="px-6 py-3 whitespace-nowrap">{{ $user->email }}</td>
-                    </tr>
+                    </tr> 
                     @endforeach
                 </table>
             </div>
