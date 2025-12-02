@@ -5,11 +5,30 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+    <div class="py-5">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-5">
+            <div class="p-6 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <a class="btn btn-sm btn-success" href={{ route('products.create') }}>Tambah Produk</a>
-                <table class="min-w-full divide-y divide-gray-200">
+
+                <x-table>
+                    <x-slot:header>
+                        <th class="px-6 py-3 font-medium">ID</th>
+                        <th class="px-6 py-3 font-medium">Nama</th>
+                        <th class="px-6 py-3 font-medium">Harga</th>
+                        <th class="px-6 py-3 font-medium">Kategori</th>
+                        <th class="px-6 py-3 font-medium">Action</th>
+                    </x-slot:head>
+
+                    @foreach ($products as $product)
+                        <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
+                            <td class="px-6 py-3">{{ $product->id }}</td>
+                            <td class="px-6 py-3">{{ $product->name }}</td>
+                            <td class="px-6 py-3">{{ $product->original_price }}</td>
+                            <td class="px-6 py-3">{{ $product->category->name }}</td>
+                        </tr>
+                    @endforeach
+                </x-table>
+                <!-- <table class="min-w-full divide-y divide-gray-200">
                     <tr>
                         <th class="px-6 py-3 bg-gray-0 text-left text-xs font0medium text-gray-500 uppercase tracking-wider">Nama</th>
                         <th class="px-6 py-3 bg-gray-0 text-left text-xs font0medium text-gray-500 uppercase tracking-wider">Harga</th>
@@ -31,7 +50,7 @@
                         </td>
                     </tr> 
                     @endforeach
-                </table>
+                </table> -->
             </div>
         </div>
     </div>
