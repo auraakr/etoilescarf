@@ -25,6 +25,11 @@
                             required />
                     </div>
 
+                    <div class="form-group">
+                        <label for="main_image">Thumbnail</label>
+                        <input type="file" class="form-control" id="main_image" name="main_image" required>
+                    </div>
+
                     <!-- Harga -->
                     <div class="mb-5">
                         <label for="original_price" class="block mb-2.5 text-sm font-medium text-heading">Harga Produk</label>

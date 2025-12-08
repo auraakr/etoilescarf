@@ -21,6 +21,7 @@
                             <td class="px-6 py-3">{{ $user->id }}</td>
                             <td class="px-6 py-3">{{ $user->email }}</td>
                             <td class="px-6 py-3">{{ $user->email }}</td>
+                            
                         </tr>
                     @endforeach
                 </x-table>

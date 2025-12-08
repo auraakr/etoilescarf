@@ -16,6 +16,10 @@
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
                     <div class="form-group">
+                        <label for="main_image">Thumbnail</label>
+                        <input type="file" class="form-control" id="main_image" name="main_image" required>
+                    </div>
+                    <div class="form-group">
                         <label for="original_price">Harga</label>
                         <input type="number" class="form-control" id="original_price" name="original_price" required>
                     </div>

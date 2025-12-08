@@ -12,18 +12,36 @@
                 <x-table>
                     <x-slot:header>
                         <th class="px-6 py-3 font-medium">ID</th>
+                        <th class="px-6 py-3 font-medium">Image</th>
                         <th class="px-6 py-3 font-medium">Nama</th>
                         <th class="px-6 py-3 font-medium">Harga</th>
                         <th class="px-6 py-3 font-medium">Kategori</th>
+                        <th class="px-6 py-3 font-medium">Deskripsi</th>
+                        <th class="px-6 py-3 font-medium">Size</th>
+                        <th class="px-6 py-3 font-medium">Harga Sale</th>
+                        <th class="px-6 py-3 font-medium">Is On Sale</th>
+                        <th class="px-6 py-3 font-medium">Sale Start Date</th>
+                        <th class="px-6 py-3 font-medium">Sale End Date</th>
+                        <th class="px-6 py-3 font-medium">Availability</th>
+                        <th class="px-6 py-3 font-medium">Is Feature</th>
                         <th class="px-6 py-3 font-medium">Action</th>
                     </x-slot:head>
 
                     @foreach ($products as $product)
                         <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
                             <td class="px-6 py-3">{{ $product->id }}</td>
+                            <td class="px-6 py-3">{{ $product->main_image }}</td>
                             <td class="px-6 py-3">{{ $product->name }}</td>
                             <td class="px-6 py-3">{{ $product->original_price }}</td>
                             <td class="px-6 py-3">{{ $product->category->name }}</td>
+                            <td class="px-6 py-3">{{ $product->description }}</td>
+                            <td class="px-6 py-3">{{ $product->size }}</td>
+                            <td class="px-6 py-3">{{ $product->sale_price }}</td>
+                            <td class="px-6 py-3">{{ $product->is_on_sale }}</td>
+                            <td class="px-6 py-3">{{ $product->sale_start_date }}</td>
+                            <td class="px-6 py-3">{{ $product->sale_end_date }}</td>
+                            <td class="px-6 py-3">{{ $product->availability }}</td>
+                            <td class="px-6 py-3">{{ $product->is_featured }}</td>
                             <td class="px-6 py-3">
                                 <div class="inline-flex rounded-base shadow-xs -space-x-px" role="group">
                                     <a href="{{ route('products.edit', $product->id) }}" class="inline-flex items-center text-body bg-neutral-primary-soft border border-default hover:bg-orange-50 hover:text-orange-600 focus:ring-3 focus:ring-orange-100 font-medium leading-5 rounded-s-base text-sm px-3 py-2 focus:outline-none">
