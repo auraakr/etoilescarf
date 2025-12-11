@@ -13,28 +13,36 @@
 
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-4">
                         <!-- image field -->
-                        <div class="relative z-0 w-full mb-5 group">
-                            <x-input id="main_image" type="text" name="main_image" required />
-                            <x-label for="main_image" value="{{ __('Image') }}" />
+                        <div class="row-span-4 relative z-0 w-full mb-5 group">
+                            <x-file-input 
+                                id="photo"
+                                name="photo"
+                                accept="image/*"
+                                label="Upload foto"
+                                hint="PNG, JPG (MAX. 2MB)"
+                            />
                         </div>
-                        <!-- harga -->
                         <div class="relative z-0 w-full mb-5 group">
-                            <x-input id="original_price" type="number" name="original_price" required />
-                            <x-label for="original_price" value="{{ __('Harga produk') }}" />
+                            <x-select id="category_id" name="category_id" :options="$categories->pluck('name', 'id')->toArray()" :selected="old('category_id')"/>
+                            <x-label for="category_id" value="{{ __('Kategori produk') }}" />
                         </div>
                         <!-- nama -->
                         <div class="relative z-0 w-full mb-5 group">
                             <x-input id="name" type="text" name="name" :value="old('name')" required />
                             <x-label for="name" value="{{ __('Nama produk') }}" />
                         </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <x-select id="category_id" name="category_id" :options="$categories->pluck('name', 'id')->toArray()" :selected="old('category_id')"/>
-                            <x-label for="category_id" value="{{ __('Kategori produk') }}" />
-                        </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <!-- ganti jadi textarea -->
-                            <textarea id="description" name="description" required></textarea> 
+                        <div class="row-span-2 relative z-0 w-full mb-5 group">
+                            <x-textarea 
+                                id="description"
+                                name="description"
+                            />
                             <x-label for="description" value="{{ __('Deskripsi produk') }}" />
+                        </div>
+                        
+                        <!-- harga -->
+                        <div class="relative z-0 w-full mb-5 group">
+                            <x-input id="original_price" type="number" name="original_price" required />
+                            <x-label for="original_price" value="{{ __('Harga produk') }}" />
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
                             <x-input id="name" type="number" name="name" required />
@@ -72,11 +80,19 @@
                             <x-label for="is_on_sale" value="{{ __('Is on sale?') }}" />
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
-                            <x-input id="sale_start_date" type="date" name="sale_start_date" required />
+                            <x-date-picker 
+                                id="sale_start_date"
+                                name="sale_start_date"
+                                required
+                            />
                             <x-label for="sale_start_date" value="{{ __('Sale start date') }}" />
                         </div>
                         <div class="relative z-0 w-full mb-5 group">
-                            <x-input id="sale_end_date" type="date" name="sale_end_date" required />
+                            <x-date-picker 
+                                id="sale_end_date"
+                                name="sale_end_date"
+                                required
+                            />
                             <x-label for="sale_end_date" value="{{ __('Sale end date') }}" />
                         </div>
                     </div>

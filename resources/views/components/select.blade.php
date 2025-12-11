@@ -7,11 +7,11 @@
     @if($required) required @endif
 >
     @if($placeholder)
-        <option value="" {{ !$selected ? 'selected' : '' }}>{{ $placeholder }}</option>
+        <option value="" {{ $selected === '' || $selected === null ? 'selected' : '' }} disabled>{{ $placeholder }}</option>
     @endif
     
     @foreach($options as $value => $label)
-        <option value="{{ $value }}" {{ $selected == $value ? 'selected' : '' }}>
+        <option value="{{ $value }}" {{ (string)$selected === (string)$value ? 'selected' : '' }}>
             {{ $label }}
         </option>
     @endforeach

@@ -9,10 +9,15 @@ export default {
         './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        "./node_modules/flowbite/**/*.js",
     ],
 
     theme: {
         extend: {
+            colors: {
+                'neutral-primary-medium': '#fff',
+                'brand': 'oklch(92.9% 0.013 255.508)',
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
