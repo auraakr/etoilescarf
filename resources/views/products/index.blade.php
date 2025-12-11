@@ -16,7 +16,6 @@
                         <th class="px-6 py-3 font-medium">Nama</th>
                         <th class="px-6 py-3 font-medium">Harga</th>
                         <th class="px-6 py-3 font-medium">Kategori</th>
-                        <th class="px-6 py-3 font-medium">Deskripsi</th>
                         <th class="px-6 py-3 font-medium">Size</th>
                         <th class="px-6 py-3 font-medium">Harga Sale</th>
                         <th class="px-6 py-3 font-medium">Is On Sale</th>
@@ -30,11 +29,16 @@
                     @foreach ($products as $product)
                         <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
                             <td class="px-6 py-3">{{ $product->id }}</td>
-                            <td class="px-6 py-3">{{ $product->main_image }}</td>
+                            <td class="px-6 py-3">
+                                @if($product->main_image)
+                                    <img src="{{ Storage::url($product->main_image) }}" alt="{{ $product->name }}">
+                                @else
+                                    <img src="{{ asset('images/no_image.jpg') }}" alt="No image">
+                                @endif
+                            </td>
                             <td class="px-6 py-3">{{ $product->name }}</td>
                             <td class="px-6 py-3">{{ $product->original_price }}</td>
                             <td class="px-6 py-3">{{ $product->category->name }}</td>
-                            <td class="px-6 py-3">{{ $product->description }}</td>
                             <td class="px-6 py-3">{{ $product->size }}</td>
                             <td class="px-6 py-3">{{ $product->sale_price }}</td>
                             <td class="px-6 py-3">{{ $product->is_on_sale }}</td>

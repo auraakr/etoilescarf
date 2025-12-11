@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductCategories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->latest()->get();
         return view('products.index', compact('products'));
     }
 
@@ -23,66 +21,102 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|max:255',
-            'original_price' => 'required',
-            'id_category' => 'required',
+            'description' => 'nullable',
+            'material' => 'nullable|max:100',
+            'size' => 'nullable|max:50',
+            'original_price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0',
+            'is_on_sale' => 'required|boolean',
+            'sale_start_date' => 'nullable|date',
+            'sale_end_date' => 'nullable|date|after_or_equal:sale_start_date',
+            'id_category' => 'required|exists:product_categories,id',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'availability' => 'required|boolean',
+            'is_featured' => 'required|boolean',
         ]);
-        Product::create($request->all());
+
+        // Handle main image upload
+        if ($request->hasFile('main_image')) {
+            $mainImage = $request->file('main_image');
+            $mainImageName = time() . '_' . $mainImage->getClientOriginalName();
+            $mainImage->storeAs('products', $mainImageName, 'public');
+            $validated['main_image'] = 'products/' . $mainImageName;
+        }
+
+        Product::create($validated);
+
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        $product = Product::find($id);
-
+        $product = Product::with('category')->findOrFail($id);
         return view('products.show', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        $categories = ProductCategories::all();
+        return view('products.edit', compact('product', 'categories'));
+    }
+
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $product = Product::findOrFail($id);
+
+        $validated = $request->validate([
             'name' => 'required|max:255',
-            'original_price' => 'required',
-            'id_category' => 'required',
+            'description' => 'nullable',
+            'material' => 'nullable|max:100',
+            'size' => 'nullable|max:50',
+            'original_price' => 'required|numeric|min:0',
+            'sale_price' => 'nullable|numeric|min:0',
+            'is_on_sale' => 'required|boolean',
+            'sale_start_date' => 'nullable|date',
+            'sale_end_date' => 'nullable|date|after_or_equal:sale_start_date',
+            'id_category' => 'required|exists:product_categories,id',
+            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'availability' => 'required|boolean',
+            'is_featured' => 'required|boolean',
         ]);
 
-        $product = Product::find($id);
-        $product->update($request->all());
+        // Handle main image upload
+        if ($request->hasFile('main_image')) {
+            // Delete old image
+            if ($product->main_image) {
+                Storage::disk('public')->delete($product->main_image);
+            }
+
+            $mainImage = $request->file('main_image');
+            $mainImageName = time() . '_' . $mainImage->getClientOriginalName();
+            $mainImage->storeAs('products', $mainImageName, 'public');
+            $validated['main_image'] = 'products/' . $mainImageName;
+        }
+
+        $product->update($validated);
 
         return redirect()->route('products.index')
             ->with('success', 'Product updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
+
+        // Delete image
+        if ($product->main_image) {
+            Storage::disk('public')->delete($product->main_image);
+        }
+
         $product->delete();
 
         return redirect()->route('products.index')
-            ->with('success', 'product deleted successfully');
-    }
-
-    public function edit($id)
-    {
-        $product = Product::find($id);
-        $categories = ProductCategories::all();
-
-        return view('products.edit', compact('product', 'categories'));
+            ->with('success', 'Product deleted successfully');
     }
 }
