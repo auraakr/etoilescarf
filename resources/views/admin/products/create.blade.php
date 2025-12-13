@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Produk') }} - {{ $product->name }}
+            {{ __('Tambah Produk') }}
         </h2>
     </x-slot>
 
@@ -15,15 +15,10 @@
                 <span class="font-semibold">{{ session('success') }}</span>
             </div>
         @endif
-
         <div class="max-w-7xl mx-auto px-6">
             <div class="bg-white overflow-hidden shadow-xl rounded">
-                
-                {{-- PERUBAHAN UTAMA: ACTION & METHOD --}}
-                <form action="{{ route('products.update', $product->id) }}" method="post" class="p-8" enctype="multipart/form-data">
+                <form action="{{ route('admin.products.store') }}" method="post" class="p-8" enctype="multipart/form-data">
                     @csrf
-                    {{-- Tambahkan method PATCH/PUT untuk operasi update di Laravel --}}
-                    @method('PUT') 
 
                     {{-- Alert untuk error umum --}}
                     @if ($errors->any())
@@ -43,94 +38,82 @@
                     @endif
                     
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-x-12 lg:gap-y-4">
-                        
-                        {{-- Tampilkan foto produk saat ini untuk referensi --}}
-                        <div class="col-span-2 mb-4">
-                            <h3 class="font-semibold text-gray-700 mb-2">Foto Produk Saat Ini:</h3>
-                            @if($product->main_image)
-                                <img src="{{ Storage::url($product->main_image) }}" alt="{{ $product->name }}" class="w-32 h-32 object-cover rounded-lg border">
-                                <p class="text-sm text-gray-500 mt-1">Biarkan kosong jika tidak ingin mengubah foto.</p>
-                            @else
-                                <p class="text-sm text-red-500">Tidak ada foto produk saat ini.</p>
-                                <img src="{{ asset('images/no-image.png') }}" alt="No image" class="w-32 h-32 object-cover rounded-lg border">
-                            @endif
-                        </div>
-
+                        <!-- image field -->
                         <div class="col-span-2 relative z-0 w-full mb-3 group">
                             <x-file-input 
                                 id="main_image"
                                 name="main_image"
                                 accept="image/*"
-                                label="Upload foto produk BARU"
+                                label="Upload foto produk"
                                 hint="PNG, JPG (MAX. 2MB)"
                             />
                         </div>
 
+                        <!-- kategori -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :selected diisi dengan $product->id_category atau old('id_category') --}}
                             <x-select 
                                 id="id_category" 
                                 name="id_category" 
                                 :options="$categories->pluck('name', 'id')->toArray()" 
-                                :selected="old('id_category', $product->id_category)" 
+                                :selected="old('id_category')"
                                 placeholder="Pilih Kategori"
                             />
                             <x-label for="id_category" value="{{ __('Kategori produk') }}" />
                         </div>
 
+                        <!-- nama -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->name atau old('name') --}}
-                            <x-input id="name" type="text" name="name" :value="old('name', $product->name)" required />
+                            <x-input id="name" type="text" name="name" :value="old('name')" required />
                             <x-label for="name" value="{{ __('Nama produk') }}" />
                         </div>
 
+                        <!-- deskripsi -->
                         <div class="row-span-3 relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: Textarea diisi dengan $product->description atau old('description') --}}
                             <x-textarea 
                                 id="description"
                                 name="description"
-                                :value="old('description', $product->description)"
+                                :value="old('description')"
                             />
                             <x-label for="description" value="{{ __('Deskripsi produk') }}" />
                         </div>
 
+                        <!-- harga original -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->original_price atau old('original_price') --}}
                             <x-input 
                                 id="original_price" 
                                 type="number" 
                                 name="original_price" 
-                                :value="old('original_price', $product->original_price)"
+                                :value="old('original_price')"
                                 step="0.01"
                                 required 
                             />
                             <x-label for="original_price" value="{{ __('Harga produk') }}" />
                         </div>
 
+                        <!-- size -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->size atau old('size') --}}
                             <x-input 
                                 id="size" 
                                 type="text" 
                                 name="size" 
-                                :value="old('size', $product->size)"
+                                :value="old('size')"
                             />
                             <x-label for="size" value="{{ __('Size') }}" />
                         </div>
 
+                        <!-- material -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->material atau old('material') --}}
                             <x-input 
                                 id="material" 
                                 type="text" 
                                 name="material" 
-                                :value="old('material', $product->material)"
+                                :value="old('material')"
                             />
                             <x-label for="material" value="{{ __('Material') }}" />
                         </div>
 
+                        <!-- availability -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :selected diisi dengan $product->availability atau old('availability') --}}
                             <x-select 
                                 id="availability" 
                                 name="availability" 
@@ -139,13 +122,13 @@
                                     '1' => 'Yes',
                                     '0' => 'No'
                                 ]"
-                                :selected="old('availability', $product->availability)" 
+                                :selected="old('availability', '')"
                             />
                             <x-label for="availability" value="{{ __('Availability') }}" />
                         </div>
 
+                        <!-- is_featured -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :selected diisi dengan $product->is_featured atau old('is_featured') --}}
                             <x-select 
                                 id="is_featured" 
                                 name="is_featured" 
@@ -154,13 +137,13 @@
                                     '1' => 'Yes',
                                     '0' => 'No'
                                 ]"
-                                :selected="old('is_featured', $product->is_featured)" 
+                                :selected="old('is_featured', '')"
                             />
                             <x-label for="is_featured" value="{{ __('Is featured?') }}" />
                         </div>
 
+                        <!-- is_on_sale -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :selected diisi dengan $product->is_on_sale atau old('is_on_sale') --}}
                             <x-select 
                                 id="is_on_sale" 
                                 name="is_on_sale" 
@@ -169,46 +152,46 @@
                                     '1' => 'Yes',
                                     '0' => 'No'
                                 ]"
-                                :selected="old('is_on_sale', $product->is_on_sale)" 
+                                :selected="old('is_on_sale', '')"
                             />
                             <x-label for="is_on_sale" value="{{ __('Is on sale?') }}" />
                         </div>
 
+                        <!-- sale_price -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->sale_price atau old('sale_price') --}}
                             <x-input 
                                 id="sale_price" 
                                 type="number" 
                                 name="sale_price" 
-                                :value="old('sale_price', $product->sale_price)"
+                                :value="old('sale_price')"
                                 step="0.01"
                             />
                             <x-label for="sale_price" value="{{ __('Harga sale') }}" />
                         </div>
 
+                        <!-- sale_start_date -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->sale_start_date atau old('sale_start_date') --}}
                             <x-date-picker 
                                 id="sale_start_date"
                                 name="sale_start_date"
-                                :value="old('sale_start_date', $product->sale_start_date ? \Carbon\Carbon::parse($product->sale_start_date)->format('Y-m-d') : null)"
+                                :value="old('sale_start_date')"
                             />
                             <x-label for="sale_start_date" value="{{ __('Sale start date') }}" />
                         </div>
 
+                        <!-- sale_end_date -->
                         <div class="relative z-0 w-full mb-3 group">
-                            {{-- PERUBAHAN: :value diisi dengan $product->sale_end_date atau old('sale_end_date') --}}
                             <x-date-picker 
                                 id="sale_end_date"
                                 name="sale_end_date"
-                                :value="old('sale_end_date', $product->sale_end_date ? \Carbon\Carbon::parse($product->sale_end_date)->format('Y-m-d') : null)"
+                                :value="old('sale_end_date')"
                             />
                             <x-label for="sale_end_date" value="{{ __('Sale end date') }}" />
                         </div>
                     </div>
 
-                    <button type="submit" class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 shadow-xs font-medium rounded text-sm px-4 py-2.5 focus:outline-none mt-4">
-                        Update Produk
+                    <button type="submit" class="text-body box-border border border-default-medium hover:bg-blue-600 hover:text-blue-50 focus:ring-4 focus:ring-blue-600 shadow-xs font-medium rounded text-sm px-4 py-2.5 focus:outline-none">
+                        Tambah produk
                     </button>
                 </form>
             </div>

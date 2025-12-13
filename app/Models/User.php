@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -64,4 +65,41 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Helper methods untuk cek role
+    public function isSuperAdmin()
+    {
+        return $this->role === 'super_admin';
+    }
+
+    public function isProductAdmin()
+    {
+        return $this->role === 'product_admin';
+    }
+
+    public function isSalesAdmin()
+    {
+        return $this->role === 'sales_admin';
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
+
+    public function canAccessProducts()
+    {
+        return in_array($this->role, ['super_admin', 'product_admin']);
+    }
+
+    public function canAccessSales()
+    {
+        return in_array($this->role, ['super_admin', 'sales_admin']);
+    }
+
+    public function canAccessUsers()
+    {
+        return $this->role === 'super_admin';
+    }
+
 }

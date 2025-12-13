@@ -3,10 +3,36 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
+                <!-- Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('admin.dashboard') }}">
+                        <x-application-mark class="block h-9 w-auto" />
+                    </a>
+                </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    
+                    <x-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+
+                    @if(auth()->user()->canAccessUsers())
+                        <x-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.*')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(auth()->user()->canAccessProducts())
+                        <x-nav-link href="{{ route('admin.products.index') }}" :active="request()->routeIs('admin.products.*')">
+                            {{ __('Products') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if(auth()->user()->canAccessSales())
+                        <x-nav-link href="{{ route('admin.sales.index') }}" :active="request()->routeIs('admin.sales.*')">
+                            {{ __('Sales') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -131,15 +157,27 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link href="{{ route('admin.dashboard') }}" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
-                {{ __('Users') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('products.index') }}" :active="request()->routeIs('products.index')">
-                {{ __('Products') }}
-            </x-responsive-nav-link>
+
+            @if(auth()->user()->canAccessUsers())
+                <x-responsive-nav-link href="{{ route('admin.users.index') }}" :active="request()->routeIs('admin.users.*')">
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->user()->canAccessProducts())
+                <x-responsive-nav-link href="{{ route('admin.products.index') }}" :active="request()->routeIs('admin.products.*')">
+                    {{ __('Products') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if(auth()->user()->canAccessSales())
+                <x-responsive-nav-link href="{{ route('admin.sales.index') }}" :active="request()->routeIs('admin.sales.*')">
+                    {{ __('Sales') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
