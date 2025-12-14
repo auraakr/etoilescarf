@@ -17,7 +17,7 @@
 <body class="bg-primary">
     <header class="">
         @if (Route::has('login'))
-            <nav id="navbar" class="bg-primary fixed w-full z-20 top-0 start-0 flex flex-wrap items-center justify-between mx-auto p-4 md:px-16">
+            <nav id="navbar" class="bg-primary fixed w-full z-20 top-0 start-0 flex flex-wrap items-center justify-between mx-auto p-4 lg:px-16">
                 <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Etoile Scarf Logo" /> -->
                     <span class="self-center text-xl font-semibold whitespace-nowrap">Etoile Scarf</span>
@@ -36,15 +36,6 @@
                             </li>
                         @endauth
                         <li>
-                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#">Featured Products</a>
-                        </li>
-                        <li>
-                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#">Arabian Collection</a>
-                        </li>
-                        <li>
-                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#">SALE</a>
-                        </li>
-                        <li>
                             <a href="https://shopee.co.id/hijab_etoilescarf" target="_blank" class="md:hidden flex justify-center gap-2 items-center shadow-xl text-sm bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-orange-500 hover:text-slate-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1.5 overflow-hidden border-2 rounded-sm group">
                                 VISIT SHOPEE
                                 <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-sm border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
@@ -55,9 +46,9 @@
                     </ul>
                 </div>
                 <!-- From Uiverse.io by nathAd17 --> 
-                <a href="https://shopee.co.id/hijab_etoilescarf" target="_blank" class="hidden md:flex justify-center gap-2 items-center shadow-xl text-sm bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-sm before:bg-orange-500 hover:text-slate-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1.5 overflow-hidden border-2 rounded-full group">
+                <a href="https://shopee.co.id/hijab_etoilescarf" target="_blank" class="hidden md:flex justify-center gap-2 items-center shadow-xl text-sm bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-sm before:bg-orange-500 hover:text-slate-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1.5 overflow-hidden border-2 rounded-sm group">
                     VISIT SHOPEE
-                    <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-sm border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-8 h-8 justify-end group-hover:rotate-90 group-hover:bg-gray-50 text-gray-50 ease-linear duration-300 rounded-full border border-gray-700 group-hover:border-none p-2 rotate-45" viewBox="0 0 16 19" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 18C7 18.5523 7.44772 19 8 19C8.55228 19 9 18.5523 9 18H7ZM8.70711 0.292893C8.31658 -0.0976311 7.68342 -0.0976311 7.29289 0.292893L0.928932 6.65685C0.538408 7.04738 0.538408 7.68054 0.928932 8.07107C1.31946 8.46159 1.95262 8.46159 2.34315 8.07107L8 2.41421L13.6569 8.07107C14.0474 8.46159 14.6805 8.46159 15.0711 8.07107C15.4616 7.68054 15.4616 7.04738 15.0711 6.65685L8.70711 0.292893ZM9 18L9 1H7L7 18H9Z" class="fill-gray-800 group-hover:fill-gray-800"></path>
                     </svg>
                 </a>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold font-heading text-xl text-gray-800 leading-tight">
             {{ __('Products') }}
         </h2>
         <a href="{{ route('admin.products.create') }}" class="text-body box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium rounded text-sm px-4 py-2.5 focus:outline-none">Tambah produk</a>

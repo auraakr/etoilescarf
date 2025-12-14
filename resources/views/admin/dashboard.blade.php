@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold font-heading text-xl text-gray-800 leading-tight">
             {{ __('Dashboard Toko') }}
         </h2>
     </x-slot>
@@ -57,14 +57,18 @@
                 <div class="lg:col-span-2 bg-white overflow-hidden shadow-md rounded-lg p-6">
                     <h3 class="text-lg font-semibold mb-4 text-gray-800">Tren Pendapatan 7 Hari Terakhir</h3>
                     {{-- CANVASH CHART.JS --}}
-                    <canvas id="revenueChart" class="w-full h-80"></canvas>
+                    <div class="h-80">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
                 </div>
 
                 {{-- Grafik 2 (Kolom 3): Distribusi Status Transaksi (Doughnut Chart) --}}
                 <div class="lg:col-span-1 bg-white overflow-hidden shadow-md rounded-lg p-6">
                     <h3 class="text-lg font-semibold mb-4 text-gray-800">Distribusi Status Pesanan</h3>
                     {{-- CANVASH CHART.JS --}}
-                    <canvas id="statusChart" class="w-full h-80"></canvas>
+                    <div class="h-80">
+                        <canvas id="statusChart"></canvas>
+                    </div>
                 </div>
             </div>
 
@@ -128,41 +132,58 @@
     @push('scripts')
     <script>
         // 1. DATA UNTUK TREND PENDAPATAN (Line Chart)
-        
-        // Data diubah dari PHP (JSON) ke variabel JavaScript
         const revenueData = @json($revenueTrend);
         const revenueLabels = revenueData.map(item => item.date);
         const revenueAmounts = revenueData.map(item => item.amount);
 
-        new Chart(document.getElementById('revenueChart'), {
-            type: 'line',
-            data: {
-                labels: revenueLabels,
-                datasets: [{
-                    label: 'Pendapatan (Rp)',
-                    data: revenueAmounts,
-                    borderColor: 'rgb(59, 130, 246)', // Blue-500
-                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                    tension: 0.3, // Membuat garis sedikit melengkung
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
+        const revenueCanvas = document.getElementById('revenueChart');
+
+        if (revenueCanvas) { // Tambahkan guard untuk keamanan
+            new Chart(revenueCanvas, {
+                type: 'line',
+                data: {
+                    labels: revenueLabels,
+                    datasets: [{
+                        label: 'Pendapatan (Rp)',
+                        data: revenueAmounts,
+                        borderColor: 'rgb(59, 130, 246)', 
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Tanggal'
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            // *** PERBAIKAN stepSize UNTUK KELIPATAN Rp 10.000 ***
+                            ticks: {
+                                stepSize: 10000, 
+                                callback: function(value, index, ticks) {
+                                    if (value >= 0) {
+                                        return 'Rp ' + value.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 }); 
+                                    }
+                                    return 'Rp ' + value; 
+                                }
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Tanggal'
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
         
         // 2. DATA UNTUK DISTRIBUSI STATUS (Doughnut Chart)
         
@@ -170,32 +191,36 @@
         const statusLabels = statusData.map(item => item.status.charAt(0).toUpperCase() + item.status.slice(1));
         const statusCounts = statusData.map(item => item.count);
         
-        new Chart(document.getElementById('statusChart'), {
-            type: 'doughnut',
-            data: {
-                labels: statusLabels,
-                datasets: [{
-                    label: 'Jumlah Pesanan',
-                    data: statusCounts,
-                    backgroundColor: [
-                        '#f59e0b', // Pending (Amber)
-                        '#3b82f6', // Processing (Blue)
-                        '#10b981', // Delivered (Green)
-                        '#ef4444', // Cancelled (Red)
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
+        const statusCanvas = document.getElementById('statusChart');
+        
+        if (statusCanvas) { // Tambahkan guard untuk keamanan
+            new Chart(statusCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels: statusLabels,
+                    datasets: [{
+                        label: 'Jumlah Pesanan',
+                        data: statusCounts,
+                        backgroundColor: [
+                            '#f59e0b', // Pending (Amber)
+                            '#3b82f6', // Processing (Blue)
+                            '#10b981', // Delivered (Green)
+                            '#ef4444', // Cancelled (Red)
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     </script>
     @endpush
 </x-app-layout>

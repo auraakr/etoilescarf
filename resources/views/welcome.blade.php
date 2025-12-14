@@ -41,13 +41,13 @@
                             </li>
                         @endauth
                         <li>
-                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#">Featured Products</a>
+                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#featured">Featured Products</a>
                         </li>
                         <li>
-                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#">Arabian Collection</a>
+                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#whyus">Why Us</a>
                         </li>
                         <li>
-                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#">SALE</a>
+                            <a class="font-light no-underline text-gray-600 hover:text-orange-600 hover:border-b hover:border-orange-600" href="#collections">Arabian Collection</a>
                         </li>
                         <li>
                             <a href="https://shopee.co.id/hijab_etoilescarf" target="_blank" class="md:hidden flex justify-center gap-2 items-center shadow-xl text-sm bg-gray-50 backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-orange-500 hover:text-slate-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-1.5 overflow-hidden border-2 rounded-sm group">
@@ -76,8 +76,8 @@
         <section id="hero" class="h-screen p-4 md:px-16">
             <img class="h-3/4 md:h-2/3 w-full object-cover object-center" src="images/hero2.jpg" alt="">
             <div class="grid lg:grid-cols-3 gap-2 lg:gap-0 items-center mt-2">
-                <h1 class="col-span-2 text-5xl md:text-6xl xl:text-8xl">Elevate your style <br>with Premium Hijab</h1>
-                <p class="text-base text-justify font-light"><i>About Us:</i><br>Etoile Scarf adalah destinasi hijab premium Anda, didirikan oleh Mia Higiawati untuk menghadirkan keanggunan dan kenyamanan tak tertandingi di setiap helaian. Kami hanya menyajikan yang terbaik.</p>
+                <h1 class="col-span-2 text-5xl md:text-6xl xl:text-8xl hover:text-green-800">Elevate your style <br>with Premium Hijab</h1>
+                <p class="text-base text-justify font-light hover:text-pink-800"><i>About Us:</i><br>Etoile Scarf adalah destinasi hijab premium Anda, didirikan oleh Mia Higiawati untuk menghadirkan keanggunan dan kenyamanan tak tertandingi di setiap helaian. Kami hanya menyajikan yang terbaik.</p>
             </div>
         </section>
 
@@ -128,12 +128,9 @@
         </section>
 
         <!-- WHY US -->
-        <section id="why" class="bg-neutral-primary-medium">
-            <div class="flex h-[400px]">
-                <img class="w-2/3 object-cover" src="images/hero.jpg" alt="img why">
-                <img class="w-1/3" src="images/whyus.jpg" alt="img why">
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 px-16 py-8">
+        <section id="whyus" class="px-4 pt-20 md:p-20 bg-neutral-primary-medium">
+            <h1 class="text-5xl my-1">Why Us</h1>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
                 <div class="p-3 border border-gray-200 rounded-sm">
                     <div class="icon p-3 rounded-lg bg-blue-100 border border-blue-200" style="width: 45px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0759c5" viewBox="0 0 256 256"><path d="M80.57,117A8,8,0,0,1,91,112.57l29,11.61V96a8,8,0,0,1,16,0v28.18l29-11.61A8,8,0,1,1,171,127.43l-30.31,12.12L158.4,163.2a8,8,0,1,1-12.8,9.6L128,149.33,110.4,172.8a8,8,0,1,1-12.8-9.6l17.74-23.65L85,127.43A8,8,0,0,1,80.57,117ZM224,56v56c0,52.72-25.52,84.67-46.93,102.19-23.06,18.86-46,25.27-47,25.53a8,8,0,0,1-4.2,0c-1-.26-23.91-6.67-47-25.53C57.52,196.67,32,164.72,32,112V56A16,16,0,0,1,48,40H208A16,16,0,0,1,224,56Zm-16,0L48,56l0,56c0,37.3,13.82,67.51,41.07,89.81A128.25,128.25,0,0,0,128,223.62a129.3,129.3,0,0,0,39.41-22.2C194.34,179.16,208,149.07,208,112Z"></path></svg>
@@ -158,14 +155,127 @@
             </div>
         </section>
 
-    </main>
+        <section id="collections" class="px-4 py-32 md:p-20 bg-neutral-primary-medium">
+            <h1 class="text-5xl my-1">Our Arabian Collections</h1>
+            <div class="flex h-[500px]">
+                <img class="w-2/3 object-cover" src="images/hero.jpg" alt="img why">
+                <img class="w-1/3 object-cover" src="images/whyus.jpg" alt="img why">
+            </div>
+        </section>
 
-    <footer class="py-16 text-center text-sm text-gray-600 bg-gray-100">
-        <div class="max-w-screen-xl mx-auto px-4">
-            <p class="mb-2 font-semibold text-gray-900">Etoile Scarf</p>
-            <p>Your Premium Hijab Collection</p>
-            <p class="mt-4">&copy; {{ date('Y') }} Etoile Scarf. All rights reserved.</p>
+        <section id="testimonials" class="px-4 py-32 md:p-20 bg-neutral-primary-medium">
+            <h1 class="text-5xl my-1">What They Say About Us</h1>    
+            <div class="grid mb-8 bg-neutral-primary-soft border border-green-800 rounded-base shadow-xs md:mb-12 md:grid-cols-2">
+                
+                {{-- TESTIMONIAL 1: Kualitas Bahan --}}
+                <figure class="flex flex-col items-center justify-center p-8 text-center border-b border-green-800 text-green-800 hover:text-black rounded-t-base md:rounded-t-none md:rounded-ss-base md:border-e">
+                    <blockquote class="max-w-2xl mx-auto mb-4 text-body lg:mb-8">
+                        <h3 class="text-lg font-semibold text-heading">Bahan Premium, Nyaman Dipakai Seharian</h3>
+                        <p class="my-4">"Teksturnya lembut banget, tegak di dahi, dan tidak gampang lecek. Cocok buat yang aktif tapi tetap ingin tampil elegan!"</p>
+                    </blockquote>
+                    <figcaption class="flex items-center justify-center">
+                        <img class="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="Foto Pelanggan 1">
+                        <div class="space-y-0.5 text-left rtl:text-right ms-2">
+                            <div class="leading-tight text-base text-heading font-medium mb-0.5">Aisyah Putri</div>
+                            <div class="text-sm text-body">Karyawan Swasta & Fashion Enthusiast</div>
+                        </div>
+                    </figcaption> 	
+                </figure>
+                
+                {{-- TESTIMONIAL 2: Desain & Warna --}}
+                <figure class="flex flex-col items-center justify-center p-8 text-center border-b border-green-800 text-green-800 hover:text-black md:rounded-se-base">
+                    <blockquote class="max-w-2xl mx-auto mb-4 text-body lg:mb-8">
+                        <h3 class="text-lg font-semibold text-heading">Pilihan Warna yang Selalu 'On Point'</h3>
+                        <p class="my-4">"Shade warna dari Etoile Scarf selalu mewah dan pas, tidak terlalu terang atau kusam. Langsung bikin penampilan level up. Sudah koleksi lebih dari lima warna!"</p>
+                    </blockquote>
+                    <figcaption class="flex items-center justify-center ">
+                        <img class="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png" alt="Foto Pelanggan 2">
+                        <div class="space-y-0.5 text-left rtl:text-right ms-2">
+                            <div class="leading-tight text-base text-heading font-medium mb-0.5">Siti Nurhaliza</div>
+                            <div class="text-sm text-body">Influencer Kecantikan & Mode</div>
+                        </div>
+                    </figcaption> 	
+                </figure>
+                
+                {{-- TESTIMONIAL 3: Nilai Jual & Kepraktisan --}}
+                <figure class="flex flex-col items-center justify-center p-8 text-center border-b border-green-800 text-green-800 hover:text-black md:rounded-es-base md:border-b-0 md:border-e">
+                    <blockquote class="max-w-2xl mx-auto mb-4 text-body lg:mb-8">
+                        <h3 class="text-lg font-semibold text-heading">Investasi Terbaik untuk Hijab Harian</h3>
+                        <p class="my-4">"Walaupun harga sedikit premium, tapi kualitas jahitannya rapih dan tahan lama. Praktis dipakai dan cepat dibentuk. Worth the price!"</p>
+                    </blockquote>
+                    <figcaption class="flex items-center justify-center ">
+                        <img class="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="Foto Pelanggan 3">
+                        <div class="space-y-0.5 text-left rtl:text-right ms-2">
+                            <div class="leading-tight text-base text-heading font-medium mb-0.5">Fatimah Azzahra</div>
+                            <div class="text-sm text-body">Mahasiswa & Owner Olshop</div>
+                        </div>
+                    </figcaption> 	
+                </figure>
+                
+                {{-- TESTIMONIAL 4: Pelayanan & Pengalaman Belanja --}}
+                <figure class="flex flex-col items-center justify-center p-8 text-center border-green-800 text-green-800 hover:text-black rounded-b-base md:rounded-se-base">
+                    <blockquote class="max-w-2xl mx-auto mb-4 text-body lg:mb-8">
+                        <h3 class="text-lg font-semibold text-heading">Pelayanan Cepat dan Packaging Mewah</h3>
+                        <p class="my-4">"Pengiriman selalu cepat, dan *packaging*-nya sangat cantik! Selalu senang belanja di Etoile Scarf, berasa seperti menerima hadiah."</p>
+                    </blockquote>
+                    <figcaption class="flex items-center justify-center ">
+                        <img class="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png" alt="Foto Pelanggan 4">
+                        <div class="space-y-0.5 text-left rtl:text-right ms-2">
+                            <div class="leading-tight text-base text-heading font-medium mb-0.5">Dewi Sartika</div>
+                            <div class="text-sm text-body">Ibu Rumah Tangga Profesional</div>
+                        </div>
+                    </figcaption> 	
+                </figure>
+            </div>
+
+        </section>
+
+    </main>
+    
+    <footer id="contact" class="grid grid-cols-1 md:grid-cols-2 py-24 px-3 md:px-16 bg-green-800 text-blue-50 gap-12">
+        <div class="">
+            <h1 class="font-heading font-regular text-4xl">Etoile Scarf</h1>
+            <h2 class="text-lg">Discover Indonesia's Hidden Underwater Paradise</h2>
+
+            <form action="#" class="mt-8">
+                <fieldset>
+                    <legend class="text-3xl">Sign up for our newsletter</legend>
+                    <div class="border-b w-[400px] flex justify-between items-center">
+                        <input class="py-5 mt-2 w-full border-0 bg-green-800 text-white" type="text" placeholder="Enter your email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#FFFFFF"
+                            viewBox="0 0 256 256">
+                            <path
+                                d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z">
+                            </path>
+                        </svg>
+                    </div>
+                </fieldset>
+            </form>
         </div>
+        <div class="flex gap-5">
+            <ul class="mx-5 text-lg">
+                <li class="mb-1 font-oswald font-regular font-bold">Quick Links</li>
+                <li class="pb-1 hover:underline"><a href="/">Home</a></li>
+                <li class="pb-1 hover:underline"><a href="#featured">Featured Products</a></li>
+                <li class="pb-1 hover:underline"><a href="#whyus">Why Us</a></li>
+                <li class="pb-1 hover:underline"><a href="#collections">Arabian Collection</a></li>
+            </ul>
+            <ul class="mx-5 text-lg">
+                <li class="mb-1 font-oswald font-regular font-bold">Contacts</li>
+                <li class="pb-1 hover:underline"><a href="#">Instagram</a></li>
+                <li class="pb-1 hover:underline"><a href="#">Shopee</a></li>
+                <li class="pb-1 hover:underline"><a href="#">Facebook</a></li>
+                <li class="pb-1 hover:underline"><a href="#">Whatsapp</a></li>
+            </ul>
+            <ul class="mx-5 text-lg">
+                <li class="mb-1 font-oswald font-regular font-bold">Source</li>
+                <li class="pb-1 hover:underline"><a href="#">Google</a></li>
+                <li class="pb-1 hover:underline"><a href="#">Flowbite</a></li>
+                <li class="pb-1 hover:underline"><a href="#">ChartJS</a></li>
+                <li class="pb-1 hover:underline"><a href="#">TailwindCSS</a></li>
+            </ul>
+        </div>
+        
     </footer>
 </body>
 
