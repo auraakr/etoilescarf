@@ -1,17 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Dashboard Toko') }}
         </h2>
     </x-slot>
-
-    <!-- <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                
-            </div>
-        </div>
-    </div> -->
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -26,7 +18,7 @@
                         Rp {{ number_format($totalRevenue, 0, ',', '.') }}
                     </p>
                     <p class="text-xs mt-2 @if($revenueChangePercent > 0) text-green-500 @elseif($revenueChangePercent < 0) text-red-500 @else text-gray-500 @endif">
-                        {{ $revenueChangePercent > 0 ? '+' : '' }}{{ $revenueChangePercent }}% dari periode lalu
+                        {{ $revenueChangePercent > 0 ? '+' : '' }}{{ $revenueChangePercent }}% vs Periode Lalu
                     </p>
                 </div>
 
@@ -58,23 +50,25 @@
                 </div>
             </div>
 
-            {{-- Bagian 2: Grafik dan Tren --}}
+            {{-- Bagian 2: Area Grafik (Canvas) --}}
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                 
-                {{-- Grafik 1 (Kolom 1-2): Tren Pendapatan --}}
+                {{-- Grafik 1 (Kolom 1-2): Tren Pendapatan (Line Chart) --}}
                 <div class="lg:col-span-2 bg-white overflow-hidden shadow-md rounded-lg p-6">
                     <h3 class="text-lg font-semibold mb-4 text-gray-800">Tren Pendapatan 7 Hari Terakhir</h3>
+                    {{-- CANVASH CHART.JS --}}
                     <canvas id="revenueChart" class="w-full h-80"></canvas>
                 </div>
 
-                {{-- Grafik 2 (Kolom 3): Distribusi Status Transaksi --}}
+                {{-- Grafik 2 (Kolom 3): Distribusi Status Transaksi (Doughnut Chart) --}}
                 <div class="lg:col-span-1 bg-white overflow-hidden shadow-md rounded-lg p-6">
                     <h3 class="text-lg font-semibold mb-4 text-gray-800">Distribusi Status Pesanan</h3>
+                    {{-- CANVASH CHART.JS --}}
                     <canvas id="statusChart" class="w-full h-80"></canvas>
                 </div>
             </div>
 
-            {{-- Bagian 3: Performa Produk dan Stok --}}
+            {{-- Bagian 3: Tabel Data (Produk Terlaris & Stok Kritis) --}}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
                 {{-- Tabel 1: Produk Terlaris --}}
@@ -133,9 +127,9 @@
     {{-- Implementasi JavaScript Chart.js --}}
     @push('scripts')
     <script>
-        // Pastikan Chart.js sudah dimuat via CDN
+        // 1. DATA UNTUK TREND PENDAPATAN (Line Chart)
         
-        // 1. Data Tren Pendapatan
+        // Data diubah dari PHP (JSON) ke variabel JavaScript
         const revenueData = @json($revenueTrend);
         const revenueLabels = revenueData.map(item => item.date);
         const revenueAmounts = revenueData.map(item => item.amount);
@@ -147,9 +141,9 @@
                 datasets: [{
                     label: 'Pendapatan (Rp)',
                     data: revenueAmounts,
-                    borderColor: 'rgb(59, 130, 246)', // Tailwind blue-500
+                    borderColor: 'rgb(59, 130, 246)', // Blue-500
                     backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                    tension: 0.1,
+                    tension: 0.3, // Membuat garis sedikit melengkung
                     fill: true
                 }]
             },
@@ -159,12 +153,19 @@
                 scales: {
                     y: {
                         beginAtZero: true
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Tanggal'
+                        }
                     }
                 }
             }
         });
         
-        // 2. Data Distribusi Status Transaksi
+        // 2. DATA UNTUK DISTRIBUSI STATUS (Doughnut Chart)
+        
         const statusData = @json($statusDistribution);
         const statusLabels = statusData.map(item => item.status.charAt(0).toUpperCase() + item.status.slice(1));
         const statusCounts = statusData.map(item => item.count);
@@ -181,7 +182,6 @@
                         '#3b82f6', // Processing (Blue)
                         '#10b981', // Delivered (Green)
                         '#ef4444', // Cancelled (Red)
-                        '#6b7280', // Default/Other (Gray)
                     ],
                     hoverOffset: 4
                 }]
@@ -198,6 +198,4 @@
         });
     </script>
     @endpush
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </x-app-layout>
