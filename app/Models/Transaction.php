@@ -39,6 +39,19 @@ class Transaction extends Model
         return $this->hasMany(TransactionItem::class);
     }
 
+    // Helper method untuk akses products lewat items
+    public function products()
+    {
+        return $this->hasManyThrough(
+            Product::class,
+            TransactionItem::class,
+            'transaction_id', // FK on transaction_items
+            'id', // FK on products
+            'id', // Local key on transactions
+            'product_id' // Local key on transaction_items
+        );
+    }
+
     // Generate order number otomatis
     protected static function boot()
     {
@@ -51,7 +64,7 @@ class Transaction extends Model
         });
     }
 
-    // Status badge color
+    // Status badge color helpers
     public function getStatusBadgeColor()
     {
         return match($this->status) {
@@ -72,5 +85,11 @@ class Transaction extends Model
             'refunded' => 'bg-gray-100 text-gray-800',
             default => 'bg-gray-100 text-gray-800',
         };
+    }
+
+    // Helper untuk total items
+    public function getTotalItemsAttribute()
+    {
+        return $this->items->sum('quantity');
     }
 }

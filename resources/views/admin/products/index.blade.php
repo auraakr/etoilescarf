@@ -40,6 +40,7 @@
                         <th class="px-6 py-3">Harga Sale</th>
                         <th class="px-6 py-3">Sale Start Date</th>
                         <th class="px-6 py-3">Sale End Date</th>
+                        <th class="px-6 py-3">Stock</th>
                         <th class="px-6 py-3">Availability</th>
                         <th class="px-6 py-3">Is Feature</th>
                         <th class="px-6 py-3">Action</th>
@@ -63,6 +64,7 @@
                             <td class="px-6 py-3">{{ $product->sale_price }}</td>
                             <td class="px-6 py-3">{{ $product->sale_start_date }}</td>
                             <td class="px-6 py-3">{{ $product->sale_end_date }}</td>
+                            <td class="px-6 py-3">{{ $product->stock }}</td>
                             <td class="px-6 py-3">{{ $product->availability }}</td>
                             <td class="px-6 py-3">{{ $product->is_featured }}</td>
                             <td class="px-6 py-3">

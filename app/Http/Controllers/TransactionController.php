@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -19,7 +20,20 @@ class TransactionController extends Controller
 
     public function create()
     {
-        $products = Product::where('availability', true)->get();
+        $products = Product::where('availability', true)
+            ->get()
+            ->map(function($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->isOnSale() ? $product->sale_price : $product->original_price,
+                    'image' => $product->main_image,
+                    'availability' => $product->availability
+                ];
+            })
+            ->values() // Convert ke indexed array
+            ->toArray(); // PENTING: Convert ke array
+            
         return view('admin.transactions.create', compact('products'));
     }
 
@@ -43,6 +57,15 @@ class TransactionController extends Controller
 
         foreach ($validated['items'] as $item) {
             $product = Product::findOrFail($item['product_id']);
+            
+            // Cek availability
+            if (!$product->availability) {
+                return back()->withErrors([
+                    'items' => "Product {$product->name} is not available."
+                ])->withInput();
+            }
+            
+            // Hitung harga (pakai sale price jika ada)
             $price = $product->isOnSale() ? $product->sale_price : $product->original_price;
             $itemSubtotal = $price * $item['quantity'];
             
@@ -51,7 +74,7 @@ class TransactionController extends Controller
                 'product_name' => $product->name,
                 'quantity' => $item['quantity'],
                 'price' => $price,
-                'subtotal' => $itemSubtotal,
+                'item_subtotal' => $itemSubtotal,
             ];
             
             $subtotal += $itemSubtotal;
@@ -83,8 +106,13 @@ class TransactionController extends Controller
 
     public function edit(Transaction $transaction)
     {
-        $products = Product::where('availability', true)->get();
-        $transaction->load('items');
+        // Ambil products untuk dropdown (kalau mau edit items)
+        $products = Product::where('availability', true)
+            ->with('category')
+            ->get();
+            
+        $transaction->load('items.product');
+        
         return view('admin.transactions.edit', compact('transaction', 'products'));
     }
 
@@ -113,6 +141,9 @@ class TransactionController extends Controller
             $validated['delivered_at'] = now();
         }
 
+        // Recalculate total if shipping cost changed
+        $validated['total_amount'] = $transaction->subtotal + $validated['shipping_cost'];
+
         $transaction->update($validated);
 
         return redirect()->route('admin.transactions.show', $transaction)
@@ -125,5 +156,106 @@ class TransactionController extends Controller
 
         return redirect()->route('admin.transactions.index')
             ->with('success', 'Transaction deleted successfully!');
+    }
+
+    public function dashboard()
+    {
+        // --- 1. Definisi Periode Waktu ---
+        $endDate = now();
+        $startDate = now()->subDays(7); // 7 Hari Terakhir
+        $prevStartDate = now()->subDays(14); // 7 Hari Sebelumnya
+        
+        // --- 2. Mengambil Data Transaksi PAID (Selesai/Dibayar) ---
+        $currentTransactions = Transaction::where('payment_status', 'paid')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->get();
+            
+        $previousTransactions = Transaction::where('payment_status', 'paid')
+            ->whereBetween('created_at', [$prevStartDate, $startDate])
+            ->get();
+            
+        // --- 3. Perhitungan KPI Utama ---
+        
+        // A. Pendapatan
+        $totalRevenue = $currentTransactions->sum('total_amount');
+        $prevRevenue = $previousTransactions->sum('total_amount');
+        
+        // B. Transaksi
+        $totalTransactions = $currentTransactions->count();
+        $prevTransactions = $previousTransactions->count();
+        
+        // C. Rata-rata Nilai Pesanan (AOV)
+        $avgOrderValue = $totalTransactions > 0 ? $totalRevenue / $totalTransactions : 0;
+        
+        // D. Persentase Perubahan Pendapatan
+        $revenueChangePercent = 0;
+        if ($prevRevenue > 0) {
+            $revenueChangePercent = (($totalRevenue - $prevRevenue) / $prevRevenue) * 100;
+        } elseif ($totalRevenue > 0) {
+            $revenueChangePercent = 100;
+        }
+
+        // E. Total Unit Terjual
+        $totalItemsSold = DB::table('transaction_items')
+            ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id')
+            ->where('transactions.payment_status', 'paid')
+            ->whereBetween('transactions.created_at', [$startDate, $endDate])
+            ->sum('quantity');
+
+        // --- 4. Data Tren untuk Grafik (Revenue Trend) ---
+        $revenueTrend = Transaction::select(
+            DB::raw('DATE(created_at) as date'), 
+            DB::raw('SUM(total_amount) as amount')
+        )
+        ->where('payment_status', 'paid')
+        ->whereBetween('created_at', [$startDate, $endDate])
+        ->groupBy('date')
+        ->orderBy('date', 'asc')
+        ->get();
+        
+        // --- 5. Data Performa Produk ---
+
+        // F. Produk Terlaris (Top 5)
+        $topProducts = DB::table('transaction_items')
+            ->select(
+                'product_name as name', 
+                DB::raw('SUM(quantity) as sold'), 
+                DB::raw('SUM(item_subtotal) as revenue')
+            )
+            ->join('transactions', 'transaction_items.transaction_id', '=', 'transactions.id')
+            ->where('transactions.payment_status', 'paid')
+            ->groupBy('product_name')
+            ->orderBy('sold', 'desc')
+            ->limit(5)
+            ->get();
+
+        // G. Distribusi Status Transaksi
+        $statusDistribution = Transaction::select('status', DB::raw('COUNT(*) as count'))
+            ->groupBy('status')
+            ->get();
+
+
+        // --- 6. Data Stok Kritis (Asumsi ada field 'stock' di Product Model) ---
+        // Asumsi batas stok kritis adalah 10
+        $lowStockProducts = Product::where('stock', '<', 10)
+            ->where('availability', true)
+            ->select('name', 'stock')
+            ->orderBy('stock', 'asc')
+            ->limit(5)
+            ->get();
+
+
+        return view('admin.dashboard', [
+            'totalRevenue' => $totalRevenue,
+            'totalTransactions' => $totalTransactions,
+            'avgOrderValue' => $avgOrderValue,
+            'revenueChangePercent' => round($revenueChangePercent, 2),
+            'totalItemsSold' => $totalItemsSold,
+            
+            'revenueTrend' => $revenueTrend,
+            'topProducts' => $topProducts,
+            'lowStockProducts' => $lowStockProducts,
+            'statusDistribution' => $statusDistribution,
+        ]);
     }
 }

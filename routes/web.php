@@ -5,7 +5,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
-use App\Http\Controllers\SalesController;
 use App\Models\Product;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
@@ -46,10 +45,8 @@ Route::middleware([
     'verified',
 ])->prefix('admin')->name('admin.')->group(function () {
     
-    // Dashboard - semua admin bisa akses
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
+    // dashboard admin
+    Route::get('/dashboard', [TransactionController::class, 'dashboard'])->name('dashboard');
 
     // Products - hanya super_admin dan product_admin
     Route::middleware(['role:super_admin,product_admin'])->group(function () {

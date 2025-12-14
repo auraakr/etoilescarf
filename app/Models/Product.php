@@ -23,6 +23,7 @@ class Product extends Model
         'main_image',
         'availability',
         'is_featured',
+        'stock',
     ];
 
     protected $casts = [

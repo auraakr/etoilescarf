@@ -37,6 +37,7 @@ class ProductController extends Controller
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'availability' => 'required|boolean',
             'is_featured' => 'required|boolean',
+            'stock' => 'required|integer|min:0',
         ]);
 
         // Handle main image upload
@@ -84,6 +85,7 @@ class ProductController extends Controller
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'availability' => 'required|boolean',
             'is_featured' => 'required|boolean',
+            'stock' => 'required|integer|min:0',
         ]);
 
         // Handle main image upload

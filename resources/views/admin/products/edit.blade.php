@@ -130,6 +130,18 @@
                         </div>
 
                         <div class="relative z-0 w-full mb-3 group">
+                            <x-input 
+                                id="stock" 
+                                type="number" 
+                                name="stock" 
+                                :value="old('stock', $product->stock ?? 0)"
+                                required 
+                                min="0"
+                            />
+                            <x-label for="stock" value="{{ __('Jumlah Stok') }}" />
+                        </div>
+
+                        <div class="relative z-0 w-full mb-3 group">
                             {{-- PERUBAHAN: :selected diisi dengan $product->availability atau old('availability') --}}
                             <x-select 
                                 id="availability" 
