@@ -35,6 +35,15 @@ class Product extends Model
         'sale_price' => 'decimal:2',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::creating(function ($product) {
+            $product->slug = Str::slug($product->name);
+        });
+    }
+
     public function category()
     {
         return $this->belongsTo(ProductCategories::class, 'id_category');

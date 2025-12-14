@@ -53,9 +53,9 @@ class ProductController extends Controller
             ->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    public function show(string $id)
+    public function show($slug)
     {
-        $product = Product::with('category')->findOrFail($id);
+        $product = Product::where('slug', $slug)->firstOrFail();
         return view('admin.products.show', compact('product'));
     }
 

@@ -24,6 +24,8 @@ Route::get('/', function () {
     return view('welcome', compact('featuredProducts', 'products'));
 });
 
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
+
 // Redirect /login ke 404 atau homepage
 Route::get('/login', function () {
     abort(404);
