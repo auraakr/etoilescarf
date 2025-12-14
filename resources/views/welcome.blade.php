@@ -22,7 +22,7 @@
 <body class="font-heading antialiased bg-primary">
     <header class="">
         @if (Route::has('login'))
-            <nav id="navbar" class="bg-primary fixed w-full z-20 top-0 start-0 flex flex-wrap items-center justify-between mx-auto p-4 md:px-16">
+            <nav id="navbar" class="bg-primary fixed w-full z-20 top-0 start-0 flex flex-wrap items-center justify-between mx-auto p-4 lg:px-16">
                 <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-7" alt="Etoile Scarf Logo" /> -->
                     <span class="self-center text-xl font-semibold whitespace-nowrap">Etoile Scarf</span>
@@ -75,8 +75,8 @@
         <!-- HERO -->
         <section id="hero" class="h-screen p-4 md:px-16">
             <img class="h-3/4 md:h-2/3 w-full object-cover object-center" src="images/hero2.jpg" alt="">
-            <div class="grid md:grid-cols-3 gap-2 md:gap-0 items-center">
-                <h1 class="col-span-2 text-5xl md:text-8xl">Elevate your style <br>with Premium Hijab</h1>
+            <div class="grid lg:grid-cols-3 gap-2 lg:gap-0 items-center mt-2">
+                <h1 class="col-span-2 text-5xl md:text-6xl xl:text-8xl">Elevate your style <br>with Premium Hijab</h1>
                 <p class="text-base text-justify font-light"><i>About Us:</i><br>Etoile Scarf adalah destinasi hijab premium Anda, didirikan oleh Mia Higiawati untuk menghadirkan keanggunan dan kenyamanan tak tertandingi di setiap helaian. Kami hanya menyajikan yang terbaik.</p>
             </div>
         </section>
@@ -85,7 +85,7 @@
         <section id="featured" class="px-4 py-32 md:p-20">
             <h1 class="text-5xl my-1">Featured Hijab</h1>
             <p></p>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-2 justify-between">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 justify-between">
                 @forelse($featuredProducts as $product)
                     <a href="{{ route('product.show', $product->slug) }}" class="group">
                         <div class="product relative w-full h-[400px] overflow-hidden rounded-sm">

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\SalesController;
@@ -58,8 +59,7 @@ Route::middleware([
 
     // Sales/Transactions - hanya super_admin dan sales_admin
     Route::middleware(['role:super_admin,sales_admin'])->group(function () {
-        Route::resource('sales', SalesController::class);
-        // atau bisa pakai nama lain seperti 'orders', 'transactions', dll
+        Route::resource('transactions', TransactionController::class);
     });
 
     // Users - hanya super_admin

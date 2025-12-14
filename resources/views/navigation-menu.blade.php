@@ -29,7 +29,7 @@
                     @endif
 
                     @if(auth()->user()->canAccessSales())
-                        <x-nav-link href="{{ route('admin.sales.index') }}" :active="request()->routeIs('admin.sales.*')">
+                        <x-nav-link href="{{ route('admin.transactions.index') }}" :active="request()->routeIs('admin.transactions.*')">
                             {{ __('Sales') }}
                         </x-nav-link>
                     @endif
@@ -174,7 +174,7 @@
             @endif
 
             @if(auth()->user()->canAccessSales())
-                <x-responsive-nav-link href="{{ route('admin.sales.index') }}" :active="request()->routeIs('admin.sales.*')">
+                <x-responsive-nav-link href="{{ route('admin.transactions.index') }}" :active="request()->routeIs('admin.transactions.*')">
                     {{ __('Sales') }}
                 </x-responsive-nav-link>
             @endif
