@@ -16,10 +16,12 @@ export default {
         extend: {
             colors: {
                 'neutral-primary-medium': '#fff',
+                'primary': 'oklch(95.4% 0.038 75.164)',
                 'brand': 'oklch(92.9% 0.013 255.508)',
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                'heading': ['Bricolage Grotesque', 'sans-serif'],
             },
         },
     },

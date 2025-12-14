@@ -6,13 +6,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\SalesController;
 use App\Models\Product;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 Route::get('/', function () {
     $featuredProducts = Product::with('category')
         ->where('is_featured', true)
         ->where('availability', true)
         ->latest()
-        ->take(3)
+        ->take(5)
         ->get();
     
     $products = Product::with('category')
@@ -22,6 +23,19 @@ Route::get('/', function () {
     
     return view('welcome', compact('featuredProducts', 'products'));
 });
+
+// Redirect /login ke 404 atau homepage
+Route::get('/login', function () {
+    abort(404);
+});
+
+// Custom login route
+Route::get('/masuk-admin', [AuthenticatedSessionController::class, 'create'])
+    ->middleware('guest')
+    ->name('login');
+
+Route::post('/masuk-admin', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(['guest', 'throttle:login']);
 
 Route::middleware([
     'auth:sanctum',
